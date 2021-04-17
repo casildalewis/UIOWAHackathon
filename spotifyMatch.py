@@ -18,7 +18,7 @@ client_secret = '704027695cb84a95b86351d933d63acd'
 def createSp(username):
     token = util.prompt_for_user_token(
     username=username,
-    scope='playlist-modify-public playlist-read-private playlist-read-collaborative',
+    scope='playlist-modify-public playlist-read-collaborative',
     client_id=client_id,
     client_secret=client_secret,
     redirect_uri="http://localhost:8889/callback")
@@ -29,7 +29,8 @@ Ivan's code
 Gets songs from playlist chosen by user user
 returns a List of string of song IDs
 """
-def getPlaylistTracksIDs(usr, username, playlist):
+def getPlaylistTracksIDs(usr, username):
+    playlist = getPlaylist(usr, username)['id']
     tracks = []
     playlist = usr.user_playlist(username, playlist)
     for item in playlist['tracks']['items']:
@@ -41,7 +42,7 @@ def getPlaylist(usr, username):
     playlists = usr.user_playlists(username)
     for playlist in playlists['items']:
         print(playlist['name'])
-    chosen = input("Please type the name of playlist to match")
+    chosen = input("Please type the name of playlist to match: ")
     for playlist in playlists['items']:
         if playlist['name'] == chosen: return playlist
 
@@ -60,16 +61,39 @@ def compareList(track_usr1, track_usr2):
             match.append(track)
     return match
 
-print("For user 1: ")
+#Set up
+print("For User 1: ")
 username1 = getUser()
-usr1 = createSp(username1)
-usr1_playlist = getPlaylist(usr1, username1)['id']
-track_usr1 = getPlaylistTracksIDs(usr1, username1, usr1_playlist)
-print("For user 2: ")
+token = util.prompt_for_user_token(
+    username=username1,
+    scope='playlist-modify-public playlist-read-collaborative',
+    client_id=client_id,
+    client_secret=client_secret,
+    redirect_uri="http://localhost:8889/callback")
+if token:
+    usr1 = spotipy.Spotify(auth=token)
+#usr1 = createSp(username1)
+track_usr1 = getPlaylistTracksIDs(usr1, username1)
+print("For User 2: ")
 username2 = getUser()
-usr2 = createSp(username2)
-usr2_playlist = getPlaylist(usr2, username2)['id']
-track_usr2 = getPlaylistTracksIDs(usr2, username2, usr2_playlist)
+token = util.prompt_for_user_token(
+    username=username2,
+    scope='playlist-modify-public playlist-read-collaborative',
+    client_id=client_id,
+    client_secret=client_secret,
+    redirect_uri="http://localhost:8889/callback")
+if token:
+    usr2 = spotipy.Spotify(auth=token)
+#usr2 = createSp(username2)
+track_usr2 = getPlaylistTracksIDs(usr2, username2)
+#Matches
 match = compareList(track_usr1, track_usr2)
+trackIDs = []
+#Output matches
 for track in match:
     print(track[1])
+    trackIDs.append(track[0])
+New_usr1 = usr1.user_playlist_create(username1, name = "The New Shared Playlist", public = False, collaborative = True)
+New_usr2 = usr2.user_playlist_create(username2, name = "The New Shared Playlist", public = False, collaborative = True)
+print(New_usr1)
+print(New_usr2)
