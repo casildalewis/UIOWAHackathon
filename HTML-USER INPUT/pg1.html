@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <style type="text/css">
+    body{
+      background: linear-gradient(180deg,mediumspringgreen, darkslategrey) fixed;
+      text-align: center;
+
+    }
+
+    input{
+      font-family: "Futura Md BT";
+      font-kerning: normal;
+      letter-spacing: 3px;
+    }
+    p{
+      margin-top: auto;
+      padding-top: 150px;
+      width: 850px;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: "Futura Md BT";
+      letter-spacing: 1px;
+      font-size: xx-large;
+    }
+    button{
+      color: black;
+      background-color: white;
+      border-radius: 50px;
+      transition-duration: 0.1s;
+      text-align: center;
+      font-size: xx-large;
+      border: none;
+      width: 300px;
+      height: 70px;
+    }
+    button:hover{
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+  </style>
+</head>
+<body>
+<p >To match your playlists we need to get your permission to access your spotify</p>
+<button><strong>AUTHORIZE</strong></button>
+</body>
+<form action="/signup" method="post">
+  <input type="text" name="email"></input>
+  <input type="submit" value="Signup"></input>
+</form>
+
+</html>
