@@ -61,7 +61,7 @@
       <p>Welcome to the Spotify Playlist Creator!<br />
         Here you can create playlists to listen to with you friends, made of
           the songs you both like!<br />
-        First you have to paste the link to your profile in the input window below.
+        First you have to paste the link to your profiles and playlists in the input window below.
       </p>
     <!--  <button><strong>AUTHORIZE</strong></button> -->
   </body>
@@ -69,6 +69,11 @@
   <form action="/signup" method="post">
     <input type="text" id="input" name="Spotify Profile Link" placeholder="Your Profile Link Here"></input><br />
     <input type="text" id="input" name="Spotify Playlist Link" placeholder="Your Playlist Link Here"></input><br/>
+  </form>
+
+  <form action="/signup2" method="post">
+    <input type="text" id="input" name="Spotify Profile Link2" placeholder="Your Friend's Profile Link Here"></input><br />
+    <input type="text" id="input" name="Spotify Playlist Link2" placeholder="Your Friend's Playlist Link Here"></input><br/>
     <input type="submit" id = "inputBtn" value="Submit"></input>
   </form>
 </html>
