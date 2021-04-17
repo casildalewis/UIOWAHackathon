@@ -72,7 +72,7 @@ token = util.prompt_for_user_token(
     redirect_uri="http://localhost:8889/callback")
 if token:
     usr1 = spotipy.Spotify(auth=token)
-#usr1 = createSp(username1)
+usr1 = createSp(username1)
 track_usr1 = getPlaylistTracksIDs(usr1, username1)
 print("For User 2: ")
 username2 = getUser()
@@ -84,7 +84,7 @@ token = util.prompt_for_user_token(
     redirect_uri="http://localhost:8889/callback")
 if token:
     usr2 = spotipy.Spotify(auth=token)
-#usr2 = createSp(username2)
+usr2 = createSp(username2)
 track_usr2 = getPlaylistTracksIDs(usr2, username2)
 #Matches
 match = compareList(track_usr1, track_usr2)
@@ -93,7 +93,6 @@ trackIDs = []
 for track in match:
     print(track[1])
     trackIDs.append(track[0])
-New_usr1 = usr1.user_playlist_create(username1, name = "The New Shared Playlist", public = False, collaborative = True)
-New_usr2 = usr2.user_playlist_create(username2, name = "The New Shared Playlist", public = False, collaborative = True)
-print(New_usr1)
-print(New_usr2)
+New_usr1 = usr1.user_playlist_create(username1, name = "The New Shared Playlist",
+                                     public = True, collaborative = False)['uri']
+usr1.user_playlist_add_tracks(username1, New_usr1, trackIDs)
