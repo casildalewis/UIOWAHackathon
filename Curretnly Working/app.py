@@ -13,6 +13,8 @@ from xml.dom import minidom
 import xml.etree.ElementTree as ET
 from datetime import date
 from flask import Flask, redirect, request
+import requests as req
+import shutil
 
 client_id = '46c1cfc8247e4267b8f5516f9a61affc'
 client_secret = '704027695cb84a95b86351d933d63acd'
@@ -84,7 +86,7 @@ def getBarCode(playlistID):
     file.write(response.content)
     file.close()
 
-def getNewPlaylistID():
+def getNewPlaylistID(usr1, username1):
     id = str(usr1.user_playlists(username1)['items'][0]['uri'])
     id = id.split(':')
     id = id[2]
@@ -151,6 +153,8 @@ def signup():
     New_usr1 = usr1.user_playlist_create(username1, name = "New Shared Playlist",
                                         public = True, collaborative = False)['uri']
     usr1.user_playlist_add_tracks(username1, New_usr1, trackIDs)
+
+    getBarCode(getNewPlaylistID(usr1, username1))
 
     return redirect('/output')
 
