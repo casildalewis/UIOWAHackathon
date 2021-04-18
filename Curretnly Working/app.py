@@ -150,6 +150,9 @@ def signup():
     for track in match:
         print(track[1])
         trackIDs.append(track[0])
+
+    if(len(trackIDs)==0):
+        return redirect('/none')
     New_usr1 = usr1.user_playlist_create(username1, name = "New Shared Playlist",
                                         public = True, collaborative = False)['uri']
     usr1.user_playlist_add_tracks(username1, New_usr1, trackIDs)
@@ -158,6 +161,12 @@ def signup():
 
     return redirect('/output')
 
+@app.route('/none')
+def noMatches():
+    #s1 = "</h1>You Have No Songs In Common</h1>"
+    with open("notMatch.html") as f:
+        s1 = f.read()
+    return s1
 @app.route('/output')
 def dispCode():
     with open("barcodeOut.html") as f:
