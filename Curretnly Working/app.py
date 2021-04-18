@@ -84,9 +84,11 @@ def getBarCode(playlistID):
     file.write(response.content)
     file.close()
 
-def getNewPlaylistID(user):
-    id = str(sp.user_playlists(userID)['items'][0]['uri'])
-    print(id)
+def getNewPlaylistID():
+    id = str(usr1.user_playlists(username1)['items'][0]['uri'])
+    id = id.split(':')
+    id = id[2]
+    return id
 
 
 app = Flask(__name__)
