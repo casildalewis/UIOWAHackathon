@@ -35,7 +35,7 @@ def getPlaylistTracksIDs(usr, username, selected=None):
     tracks = []
     playlist = usr.user_playlist(username, playlist['id'])
     for item in playlist['tracks']['items']:
-        
+
         track = item['track']
         tracks.append((track['id'], track['name']))
     return tracks
@@ -84,18 +84,22 @@ def getBarCode(playlistID):
     file.write(response.content)
     file.close()
 
+def getNewPlaylistID(user):
+    id = str(sp.user_playlists(userID)['items'][0]['uri'])
+    print(id)
+
 
 app = Flask(__name__)
 #p1=True
 @app.route('/')
-def home():   
+def home():
     with open("pg1.html") as f:
         html = f.read()
     return html
 
 @app.route('/signup', methods = ['POST'])
 def signup():
-    
+
     print("called user 1")
     Userlink = request.form.get('Spotify Profile Link')
     playlistName = request.form.get('Spotify Playlist Name')
@@ -132,7 +136,7 @@ def signup():
     redirect_uri="http://localhost:8889/callback")
     if token:
         usr2 = spotipy.Spotify(auth=token)
-        
+
     usr2 = createSp(username2)
     usr2_playlist = getPlaylist(usr2, username2, playlistName2)
     track_usr2 = getPlaylistTracksIDs(usr2, username2, playlistName2)
@@ -145,7 +149,7 @@ def signup():
     New_usr1 = usr1.user_playlist_create(username1, name = "New Shared Playlist",
                                         public = True, collaborative = False)['uri']
     usr1.user_playlist_add_tracks(username1, New_usr1, trackIDs)
-    
+
     return redirect('/output')
 
 @app.route('/output')
