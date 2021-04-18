@@ -153,9 +153,9 @@ def signup():
 
     if(len(trackIDs)==0):
         return redirect('/none')
-    New_usr1 = usr1.user_playlist_create(username1, name = "New Shared Playlist",
+    usr1.user_playlist_create(username1, name = "New Shared Playlist",
                                         public = True, collaborative = False)['uri']
-    usr1.user_playlist_add_tracks(username1, New_usr1, trackIDs)
+    usr1.user_playlist_add_tracks(username1, usr1, trackIDs)
 
     getBarCode(getNewPlaylistID(usr1, username1))
 
@@ -167,6 +167,7 @@ def noMatches():
     with open("error.html") as f:
         s1 = f.read()
     return s1
+
 @app.route('/output')
 def dispCode():
     with open("barcodeOut.html") as f:
